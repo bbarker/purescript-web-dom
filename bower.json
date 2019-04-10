@@ -16,5 +16,8 @@
   ],
   "dependencies": {
     "purescript-web-events": "^2.0.0"
+  },
+  "devDependencies": {
+    "purescript-test-unit": "^15.0.0"
   }
 }
