@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 exports.evaluate = function (xpathExpression) {
   return function (contextNode) {
     return function (namespaceResolver) {
@@ -23,3 +21,8 @@ exports.evaluate = function (xpathExpression) {
     };
   };
 };
+
+exports.stringValue = function (xpathResult) {
+  return xpathResult.stringValue;
+};
+

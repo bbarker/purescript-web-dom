@@ -19,3 +19,5 @@ foreign import evaluate ::
   -> ResultType
   -> Maybe XPathResult
   -> XPathResult
+
+foreign import stringValue :: XPathResult -> String
