@@ -1,3 +1,7 @@
+module Test.Data where
+
+cdCatalogXml :: String
+cdCatalogXml = """
 <?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
   <CD>
@@ -209,3 +213,15 @@
     <YEAR>1987</YEAR>
   </CD>
 </CATALOG>
+"""
+
+noteXml :: String
+noteXml = """
+<?xml version="1.0" encoding="UTF-8"?>
+<note>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <body>Don't forget me this weekend!</body>
+</note>
+"""

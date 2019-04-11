@@ -2,5 +2,4 @@
 
 npm run build && \
   pulp build --main "Test.Main" --src-path "test" -- --censor-lib --strict && \
-  cp -R test/xmlexamples dist/ && \
   parcel --no-hmr --public-url ./ build test/index.html
