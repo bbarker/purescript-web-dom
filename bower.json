@@ -15,10 +15,12 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-web-events": "^2.0.0"
+    "purescript-web-events": "^2.0.0",
+    "purescript-web-dom": "^2.0.0"
   },
   "devDependencies": {
     "purescript-test-unit": "^15.0.0",
-    "purescript-console": "^3.2.1"
+    "purescript-console": "^3.2.1",
+    "purescript-dom-parser": "^4.0.0"
   }
 }
