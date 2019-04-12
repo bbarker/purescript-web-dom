@@ -1,8 +1,7 @@
 module Test.Data where
 
 cdCatalogXml :: String
-cdCatalogXml = """
-<?xml version="1.0" encoding="UTF-8"?>
+cdCatalogXml = """<?xml version="1.0" encoding="UTF-8"?>
 <CATALOG>
   <CD>
     <TITLE>Empire Burlesque</TITLE>
@@ -216,8 +215,7 @@ cdCatalogXml = """
 """
 
 noteXml :: String
-noteXml = """
-<?xml version="1.0" encoding="UTF-8"?>
+noteXml = """<?xml version="1.0" encoding="UTF-8"?>
 <note>
   <to>Tove</to>
   <from>Jani</from>
