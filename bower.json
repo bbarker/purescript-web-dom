@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "purescript-test-unit": "^15.0.0",
-    "purescript-console": "^3.2.1",
-    "purescript-dom-parser": "^4.0.0"
+    "purescript-console": "^4.2.0",
+    "purescript-dom-parser": "bbarker/purescript-dom-parser#a7b68a787783a6028b9648a297ff3933c0ec0447"
   }
 }
