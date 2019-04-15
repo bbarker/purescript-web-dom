@@ -11,6 +11,7 @@ module Web.DOM.Document.XPath (
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
 
+import Web.DOM.Document                       (Document)
 import Web.DOM.Document.XPath.ResultType      (ResultType)
 --import Web.DOM.Document.XPath.ResultType      as RT
 import Web.DOM.Internal.Types (Node)
@@ -25,9 +26,10 @@ evaluate ::
   -> Maybe NSResolver
   -> ResultType
   -> Maybe XPathResult
+  -> Document
   -> XPathResult
-evaluate xpath ctxt nsres resType res =
-  evaluateNative xpath ctxt (toNullable nsres) resType (toNullable res)
+evaluate xpath ctxt nsres resType res doc =
+  evaluateNative xpath ctxt (toNullable nsres) resType (toNullable res) doc
 
 foreign import evaluateNative ::
   String
@@ -35,6 +37,7 @@ foreign import evaluateNative ::
   -> Nullable NSResolver
   -> ResultType
   -> Nullable XPathResult
+  -> Document
   -> XPathResult
 
 foreign import stringValue :: XPathResult -> String
