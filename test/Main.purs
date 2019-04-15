@@ -15,7 +15,7 @@ import Test.Unit.Assert                  as Assert
 
 import Web.DOM.Document                  (Document, toNode)
 import Web.DOM.DOMParser                 (DOMParser, makeDOMParser, parseXMLFromString)
-import Web.DOM.Document.XPath            (evaluate, stringValue)
+import Web.DOM.Document.XPath            as XP
 import Web.DOM.Document.XPath.ResultType as RT
 import Web.DOM.Node                      (nodeName)
 
@@ -32,9 +32,11 @@ main = runTest do
       tlog $ "string type is: "
       tlog RT.string_type
       tlog $ "got a node: " <> (nodeName note)
-      noteTo <- pure $ stringValue $
-        evaluate ("/note/to") note Nothing RT.string_type Nothing noteDoc
+      xpathRes <- pure $ XP.evaluate
+        ("/note/to") note Nothing RT.string_type Nothing noteDoc
+      noteTo <- pure $ XP.stringValue xpathRes
       tlog $ "got a note to: " <> noteTo
+      Assert.equal RT.string_type (XP.resultType xpathRes)
       Assert.equal "Tove" noteTo
 
 

@@ -20,6 +20,14 @@ exports.evaluateNative = function (xpathExpression) {
   };
 };
 
+exports.resultType = function (xpathResult) {
+  return xpathResult.resultType;
+};
+
+exports.numberValue = function (xpathResult) {
+  return xpathResult.numberValue;
+};
+
 exports.stringValue = function (xpathResult) {
   return xpathResult.stringValue;
 };

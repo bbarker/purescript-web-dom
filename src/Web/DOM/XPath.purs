@@ -1,5 +1,7 @@
 module Web.DOM.Document.XPath (
     evaluate
+  , numberValue
+  , resultType
   , stringValue
   , NSResolver
   , XPathEvaluator
@@ -40,4 +42,6 @@ foreign import evaluateNative ::
   -> Document
   -> XPathResult
 
+foreign import resultType :: XPathResult -> ResultType
+foreign import numberValue :: XPathResult -> Number
 foreign import stringValue :: XPathResult -> String
