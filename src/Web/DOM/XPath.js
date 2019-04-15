@@ -6,15 +6,13 @@ exports.evaluateNative = function (xpathExpression) {
       return function (resultType) {
         return function (result) {
           return function (doc) {
-            return function () {
-              return doc.evaluate(
-                xpathExpression
-                , contextNode
-                , namespaceResolver
-                , resultType
-                , result
-              );
-            };
+            return doc.evaluate(
+              xpathExpression
+              , contextNode
+              , namespaceResolver
+              , resultType
+              , result
+            );
           };
         };
       };

@@ -35,7 +35,6 @@ main = runTest do
       noteTo <- pure $ stringValue $
         evaluate ("/note/to") note Nothing RT.string_type Nothing noteDoc
       tlog $ "got a note to: " <> noteTo
-      Assert.equal "foo" ("f" <> "o" <> "o")
       Assert.equal "Tove" noteTo
 
 
