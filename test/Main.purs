@@ -2,18 +2,21 @@ module Test.Main where
 
 import Prelude
 
-import Effect                          (Effect)
-import Effect.Class                    (liftEffect)
--- import Effect.Console                  (log)
+import Data.Maybe                        (Maybe(..))
+import Effect                            (Effect)
+import Effect.Class                      (liftEffect)
+import Effect.Console                  (log)
 
-import Test.Data                       as TD
-import Test.Unit                       (suite, test)
-import Test.Unit.Main                  (runTest)
-import Test.Unit.Assert                as Assert
+import Test.Data                         as TD
+import Test.Unit                         (suite, test)
+import Test.Unit.Main                    (runTest)
+import Test.Unit.Assert                  as Assert
 
-import Web.DOM.Document                (Document)
-import Web.DOM.DOMParser               (DOMParser, makeDOMParser, parseXMLFromString)
+import Web.DOM.Document                  (Document, toNode)
+import Web.DOM.DOMParser                 (DOMParser, makeDOMParser, parseXMLFromString)
 
+import Web.DOM.Document.XPath            (evaluate, stringValue)
+import Web.DOM.Document.XPath.ResultType as RT
 parseNoteDoc :: DOMParser -> Document
 parseNoteDoc dp = parseXMLFromString TD.noteXml dp
 
@@ -22,9 +25,12 @@ main = runTest do
   suite "non-namespaced tests" do
     test "note.xml" do
       domParser <- liftEffect $ makeDOMParser
-      note <- pure $ parseNoteDoc domParser
-      -- liftEffect $ log "hi2!!!!!!!"
-      Assert.assert "2 + 2 should be 4" $ (2 + 2) == 4
-      Assert.assertFalse "2 + 2 shouldn't be 5" $ (2 + 2) == 5
-      Assert.equal 4 (2 + 2)
-      Assert.expectFailure "2 + 2 shouldn't be 5" $ Assert.equal 5 (2 + 2)
+      noteDoc <- pure $ parseNoteDoc domParser
+      note <- pure $ toNode noteDoc
+      noteTo <- pure $ stringValue $
+        evaluate ("/note/to") note Nothing RT.string_type Nothing
+      liftEffect $ log $ "got a note to: " <> noteTo
+      Assert.equal "foo" ("f" <> "o" <> "o")
+      Assert.equal "Tove" noteTo
+        
+

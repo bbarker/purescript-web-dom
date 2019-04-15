@@ -1,6 +1,6 @@
 "use strict";
 
-exports.evaluate = function (xpathExpression) {
+exports.evaluateNative = function (xpathExpression) {
   return function (contextNode) {
     return function (namespaceResolver) {
       return function (resultType) {
