@@ -20,6 +20,9 @@ exports.evaluateInternal = function (xpathExpression) {
   };
 };
 
+
+//       --- XPathResult functions ---
+
 exports.resultType = function (xpathResult) {
   return xpathResult.resultType;
 };
@@ -58,3 +61,17 @@ exports.snapshotItemInternal = function (xpathResult) {
   };
 };
 
+//       --- namespace resolver functions ---
+
+exports.customNSResolver = function (customRes) {
+  var nsResolver = {
+    lookupNamespaceURI : customRes
+  };
+  return nsResolver;
+};
+
+exports.createNSResolver = function (nodeResolver) {
+  return function (doc) {
+    doc.createNSResolver(nodeResolver);
+  };
+};

@@ -17,23 +17,34 @@ import Test.Unit.Assert                  as Assert
 
 import Web.DOM.Document                  (Document, toNode)
 import Web.DOM.DOMParser                 (DOMParser, makeDOMParser, parseXMLFromString)
+import Web.DOM.Document.XPath            (NSResolver)
 import Web.DOM.Document.XPath            as XP
 import Web.DOM.Document.XPath.ResultType as RT
 import Web.DOM.Node                      (nodeName)
 
-parseNoteDoc :: DOMParser -> Document
-parseNoteDoc dp = parseXMLFromString TD.noteXml dp
+parseAtomFeedDoc :: DOMParser -> Document
+parseAtomFeedDoc dp = parseXMLFromString TD.atomFeedXml dp
 
 parseCatalogDoc :: DOMParser -> Document
 parseCatalogDoc dp = parseXMLFromString TD.cdCatalogXml dp
 
+parseNoteDoc :: DOMParser -> Document
+parseNoteDoc dp = parseXMLFromString TD.noteXml dp
+
+
+atomResolver :: NSResolver
+atomResolver = XP.customNSResolver dummyAtomRes
+  where dummyAtomRes _ = "http://www.w3.org/2005/Atom"
+
 main :: Effect Unit
 main = runTest do
   suite "non-namespaced tests" do
-    test "note.xml" do
+    test "note.xml and catalog.xml" do
       domParser <- liftEffect $ makeDOMParser
+
       noteDoc <- pure $ parseNoteDoc domParser
       note <- pure $ toNode noteDoc
+
       catalogDoc <- pure $ parseCatalogDoc domParser
       catalog <- pure $ toNode catalogDoc
 
@@ -64,7 +75,8 @@ main = runTest do
 
       cdsSnapRes <- pure $ XP.evaluate
         ("/CATALOG/CD")
-        catalog Nothing
+        catalog
+        Nothing
         RT.unordered_node_snapshot_type
         Nothing
         catalogDoc
@@ -72,7 +84,24 @@ main = runTest do
       tlog $ "got " <> (show cdsSnapLen) <> " CDs"
       Assert.equal (intToNat 26) cdsSnapLen
 
+  suite "namespaced tests" do
+    test "atom.xml" do
+      domParser <- liftEffect $ makeDOMParser
+
+      atomFeedDoc <- pure $ parseAtomFeedDoc domParser
+      atomFeed <- pure $ toNode atomFeedDoc
+
+      atomEntriesRes <- pure $ XP.evaluate
+        ("//dummyns:entry")
+        atomFeed
+        (Just atomResolver)
+        RT.unordered_node_snapshot_type
+        Nothing
+        atomFeedDoc
+      atomEntriesLen <- pure $ XP.snapshotLength atomEntriesRes
+      tlog $ "got " <> (show atomEntriesLen) <> " atom entries"
+      Assert.equal (intToNat 3) atomEntriesLen
+
 tlog :: forall a. Show a => a -> Aff Unit
 tlog = liftEffect <<< logShow
-
 
